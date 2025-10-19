@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MZAZI Ludo Game</title>
+  <link rel="stylesheet" href="ludo.css" />
+</head>
+<body>
+  <header>
+    <h2>🎲 MZAZI LUDO ARENA 🎲</h2>
+    <div class="user-panel">
+      <span>Player: <b id="player-name">MZAZI</b></span>
+      <span>Wins: <b id="win-count">0</b></span>
+      <button id="logout">Logout</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="game-controls">
+      <button id="create-room">Create Room</button>
+      <button id="join-room">Join Room</button>
+      <button id="rollDice" disabled>Roll Dice</button>
+      <div id="dice-display">🎲 Ready!</div>
+    </section>
+
+    <!-- Ludo Board -->
+    <section id="ludo-board">
+      <!-- 15x15 grid -->
+      <div class="grid">
+        <!-- We will generate cells via JS -->
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

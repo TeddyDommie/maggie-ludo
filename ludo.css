@@ -1,0 +1,146 @@
+body {
+  background: radial-gradient(circle at top, #05010a, #000);
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+header {
+  text-align: center;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  width: 100%;
+  box-shadow: 0 0 10px #4dd2ff;
+}
+
+.user-panel {
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  font-size: 0.9rem;
+}
+
+button {
+  background: #ff4db4;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+button:hover {
+  box-shadow: 0 0 10px #ff4db4;
+  transform: scale(1.05);
+}
+
+#game-controls {
+  text-align: center;
+  margin: 20px;
+}
+
+#dice-display {
+  font-size: 1.4rem;
+  color: #4dd2ff;
+  text-shadow: 0 0 8px #4dd2ff;
+  margin-top: 10px;
+}
+
+#ludo-board {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(15, 30px);
+  grid-template-rows: repeat(15, 30px);
+  gap: 1px;
+  background: #111;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px #4dd2ff;
+  position: relative;
+}
+
+/* Cell Base */
+.cell {
+  width: 30px;
+  height: 30px;
+  background: #222;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Color Zones */
+.red-zone {
+  background: #ff4d4d;
+}
+.green-zone {
+  background: #4dff4d;
+}
+.blue-zone {
+  background: #4dd2ff;
+}
+.yellow-zone {
+  background: #ffff4d;
+}
+
+/* Safe and Path cells */
+.path {
+  background: #333;
+}
+.safe {
+  background: #777;
+}
+
+/* Tokens */
+.token {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  position: absolute;
+  transition: 0.5s ease;
+}
+.token.red {
+  background: #ff4d4d;
+  box-shadow: 0 0 10px #ff4d4d;
+}
+.token.green {
+  background: #4dff4d;
+  box-shadow: 0 0 10px #4dff4d;
+}
+.token.blue {
+  background: #4dd2ff;
+  box-shadow: 0 0 10px #4dd2ff;
+}
+.token.yellow {
+  background: #ffff4d;
+  box-shadow: 0 0 10px #ffff4d;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(15, 20px);
+    grid-template-rows: repeat(15, 20px);
+  }
+  .cell {
+    width: 20px;
+    height: 20px;
+  }
+  .token {
+    width: 14px;
+    height: 14px;
+  }
+}

@@ -1,0 +1,44 @@
+body {
+  background: linear-gradient(135deg, #000, #1a0033);
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.register-box {
+  background: rgba(255,255,255,0.05);
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px #4dd2ff;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 12px 0;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background: #ff4db4;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+a {
+  color: #4dd2ff;
+  text-decoration: none;
+}
