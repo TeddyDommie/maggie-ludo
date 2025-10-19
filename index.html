@@ -1,120 +1,164 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mzazi Ludo Game</title>
-    <link rel="stylesheet" href="index.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MZAZI ft MAGGIE Ludo — Play Online</title>
+  <link rel="stylesheet" href="index.css" />
 </head>
 <body>
-    <!-- Authentication Screens -->
-    <div id="auth-container">
-        <div id="login-screen" class="screen active">
-            <h2>Login to Ludo</h2>
-            <form id="login-form">
-                <input type="text" id="login-username" placeholder="Username" required>
-                <input type="password" id="login-password" placeholder="Password" required>
-                <button type="submit">Login</button>
-            </form>
-            <p>Don't have an account? <a href="#" id="show-register">Register here</a></p>
+  <div id="app" class="wrap">
+    <header>
+      <div class="logo">LUDO • Challenge & Play</div>
+      <div class="sub">Register / Login • Rooms • Track wins • Mobile friendly</div>
+    </header>
+
+    <div class="frame">
+      <div class="panel">
+        <div class="auth">
+          <div id="welcome" class="muted">Welcome! Please register or login to play.</div>
+          <label>Username</label>
+          <input id="username" placeholder="your name" />
+          <label>Password</label>
+          <input id="password" type="password" placeholder="password" />
+          <div class="auth-buttons">
+            <button id="btnRegister" class="btn ghost">Register</button>
+            <button id="btnLogin" class="btn primary">Login</button>
+          </div>
+          <div class="muted stats">Wins: <span id="wins">0</span> • Total games: <span id="total">0</span></div>
         </div>
 
-        <div id="register-screen" class="screen">
-            <h2>Register for Ludo</h2>
-            <form id="register-form">
-                <input type="text" id="register-username" placeholder="Username" required>
-                <input type="password" id="register-password" placeholder="Password" required>
-                <button type="submit">Register</button>
-            </form>
-            <p>Already have an account? <a href="#" id="show-login">Login here</a></p>
+        <div class="rooms">
+          <div class="room-actions">
+            <button id="createRoom" class="btn primary">Create Room</button>
+            <input id="joinCode" placeholder="Room code" />
+            <button id="joinRoom" class="btn ghost">Join</button>
+          </div>
+          <div class="room-list" id="roomList"></div>
         </div>
+      </div>
+
+      <div class="play-area">
+        <div class="board-chat">
+          <div class="board panel" id="boardPanel">
+            <div class="ludo" id="ludoBoard"></div>
+          </div>
+
+          <div class="panel chat">
+            <div class="dice-wrap">
+              <div class="dice orbit" id="orbitDice"><div class="dots" id="diceFace">⚀</div></div>
+            </div>
+            <div class="messages" id="messages"></div>
+            <div class="chat-input">
+              <input id="chatText" placeholder="Say something..." />
+              <button id="sendMsg" class="btn primary">Send</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="controls">
+          <div class="status" id="gameStatus">Not in room</div>
+          <button id="rollDice" class="btn primary">Roll Dice</button>
+          <button id="resetLocal" class="btn ghost">Reset</button>
+        </div>
+      </div>
     </div>
 
-    <!-- Main Game Screen -->
-    <div id="game-container" class="hidden">
-        <header>
-            <div id="user-info">
-                <span id="current-user">Welcome, <span id="username-display"></span></span>
-                <span id="wins">Wins: <span id="win-count">0</span></span>
-                <button id="logout-btn">Logout</button>
-            </div>
-        </header>
+    <footer>Demo Ludo — local play only. Firebase can be added later for online rooms.</footer>
+  </div>
 
-        <main>
-            <!-- Lobby Section -->
-            <div id="lobby-section">
-                <h2>Game Lobby</h2>
-                <div class="lobby-actions">
-                    <button id="create-room-btn">Create Room</button>
-                    <button id="join-room-btn">Join Room</button>
-                </div>
-                <div id="room-code-input" class="hidden">
-                    <input type="text" id="room-code" placeholder="Enter Room Code">
-                    <button id="join-btn">Join</button>
-                </div>
-                <div id="room-info" class="hidden">
-                    <p>Room Code: <span id="current-room-code"></span></p>
-                    <p>Players: <span id="player-count">1</span>/2</p>
-                    <button id="start-game-btn" disabled>Start Game</button>
-                </div>
-            </div>
+  <script>
+    const $ = (id)=>document.getElementById(id);
 
-            <!-- Game Board Section -->
-            <div id="game-board-section" class="hidden">
-                <div id="dice-container">
-                    <div id="dice" class="dice-face-1">
-                        <div class="dot"></div>
-                    </div>
-                    <button id="roll-dice-btn">Roll Dice</button>
-                    <div id="dice-value">Roll to start!</div>
-                </div>
-                
-                <div id="game-board">
-                    <!-- Simplified board representation -->
-                    <div class="board-row">
-                        <div class="cell home red">R</div>
-                        <div class="cell path"></div>
-                        <div class="cell path"></div>
-                        <div class="cell path"></div>
-                        <div class="cell home yellow">Y</div>
-                    </div>
-                    <div class="board-row">
-                        <div class="cell path"></div>
-                        <div class="cell center"></div>
-                        <div class="cell center"></div>
-                        <div class="cell center"></div>
-                        <div class="cell path"></div>
-                    </div>
-                    <div class="board-row">
-                        <div class="cell path"></div>
-                        <div class="cell center"></div>
-                        <div class="cell center dice-area"></div>
-                        <div class="cell center"></div>
-                        <div class="cell path"></div>
-                    </div>
-                    <div class="board-row">
-                        <div class="cell path"></div>
-                        <div class="cell center"></div>
-                        <div class="cell center"></div>
-                        <div class="cell center"></div>
-                        <div class="cell path"></div>
-                    </div>
-                    <div class="board-row">
-                        <div class="cell home blue">B</div>
-                        <div class="cell path"></div>
-                        <div class="cell path"></div>
-                        <div class="cell path"></div>
-                        <div class="cell home green">G</div>
-                    </div>
-                </div>
-                
-                <div id="game-controls">
-                    <button id="leave-room-btn">Leave Room</button>
-                </div>
-            </div>
-        </main>
-    </div>
+    function loadUsers(){return JSON.parse(localStorage.getItem('ludo_users')||'{}');}
+    function saveUsers(u){localStorage.setItem('ludo_users',JSON.stringify(u));}
+    function showUserInfo(){
+      const cur = localStorage.getItem('ludo_current');
+      if(cur){
+        const user = loadUsers()[cur];
+        $('welcome').innerText = `Hi ${cur}!`;
+        $('wins').innerText = user.wins||0;
+        $('total').innerText = user.total||0;
+      } else {
+        $('welcome').innerText = 'Welcome! Please register or login to play.';
+      }
+    }
 
-    <script src="script.js"></script>
+    $('btnRegister').onclick = ()=>{
+      const name = $('username').value.trim(), pass = $('password').value;
+      if(!name||!pass) return alert('Enter all fields');
+      const users = loadUsers();
+      if(users[name]) return alert('Username exists');
+      users[name] = {pass,wins:0,total:0};
+      saveUsers(users);
+      localStorage.setItem('ludo_current',name);
+      showUserInfo();
+      alert('Registered & logged in');
+    };
+
+    $('btnLogin').onclick = ()=>{
+      const name = $('username').value.trim(), pass = $('password').value;
+      const users = loadUsers();
+      if(!users[name]||users[name].pass!==pass) return alert('Invalid credentials');
+      localStorage.setItem('ludo_current',name);
+      showUserInfo();
+      alert('Logged in');
+    };
+
+    function generateRoomCode(){return Math.random().toString(36).slice(2,8).toUpperCase();}
+    function loadRooms(){return JSON.parse(localStorage.getItem('ludo_rooms')||'{}');}
+    function saveRooms(r){localStorage.setItem('ludo_rooms',JSON.stringify(r));}
+    function renderRoomList(){
+      const list = $('roomList'); list.innerHTML='';
+      const rooms=loadRooms();
+      for(const code in rooms){
+        const r=rooms[code];
+        const el=document.createElement('div');
+        el.className='room';
+        el.innerHTML=`<strong>${code}</strong> — ${r.players.length}/2 
+          <button class='btn ghost' data-code='${code}'>Join</button>`;
+        list.appendChild(el);
+      }
+      list.querySelectorAll('button').forEach(b=>b.onclick=()=>joinRoom(b.dataset.code));
+    }
+
+    $('createRoom').onclick=()=>{
+      const cur=localStorage.getItem('ludo_current');
+      if(!cur) return alert('Login first');
+      const code=generateRoomCode();
+      const rooms=loadRooms();
+      rooms[code]={players:[cur],chat:[]};
+      saveRooms(rooms); renderRoomList(); alert(`Room created: ${code}`);
+    };
+
+    function joinRoom(code){
+      const cur=localStorage.getItem('ludo_current');
+      if(!cur) return alert('Login first');
+      const rooms=loadRooms();
+      if(!rooms[code]) return alert('Room not found');
+      if(!rooms[code].players.includes(cur)) rooms[code].players.push(cur);
+      saveRooms(rooms);
+      alert(`Joined room ${code}`);
+      $('gameStatus').innerText=`In room ${code}`;
+    }
+
+    $('joinRoom').onclick=()=>{
+      const code=$('joinCode').value.trim().toUpperCase();
+      if(!code) return alert('Enter code');
+      joinRoom(code);
+    };
+
+    $('rollDice').onclick=()=>{
+      const face=Math.floor(Math.random()*6)+1;
+      $('diceFace').innerText=['⚀','⚁','⚂','⚃','⚄','⚅'][face-1];
+    };
+
+    $('resetLocal').onclick=()=>{
+      localStorage.clear(); location.reload();
+    };
+
+    showUserInfo();
+    renderRoomList();
+  </script>
 </body>
 </html>
